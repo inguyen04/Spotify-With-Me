@@ -68,6 +68,29 @@ body {
   color: white;
 }
 
+.icon-1 {
+  top: 5rem;
+  position: absolute;
+  top: 30rem;
+  left: 15rem;
+}
+
+.icon-2 {
+  position: absolute;
+  top: 30rem;
+  left: 43rem;
+}
+
+.icon-3 {
+  position: absolute;
+  top: 30rem;
+  left: 70rem;
+}
+
+.logo-1, .logo-2, .logo-3 {
+  width: 4rem;
+}
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -85,7 +108,7 @@ body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
+  .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
