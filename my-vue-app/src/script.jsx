@@ -2,15 +2,15 @@ const clientId = "cef9cca2812d435dac59804107b8fcba"; // Replace with your client
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
-if (!code) {
-    redirectToAuthCodeFlow(clientId);
-} else {
-    const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
-    console.log(profile); // Profile data logs to console
+// if (!code) {
+//     redirectToAuthCodeFlow(clientId);
+// } else {
+//     const accessToken = await getAccessToken(clientId, code);
+//     const profile = await fetchProfile(accessToken);
+//     console.log(profile); // Profile data logs to console
 
-    populateUI(profile);
-}
+//     populateUI(profile);
+// }
 
 
 export async function redirectToAuthCodeFlow(clientId) {
