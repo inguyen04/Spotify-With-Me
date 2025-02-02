@@ -36,13 +36,16 @@ def receive_userid():
     return jsonify({"error": str(e)}), 500
 
 
-@routes.route('/add-review', methods=['GET'])
+@routes.route('/add-review', methods=['POST'])
 def add_review():
   try:
     data = request.get_json()
     user_id = data.get("user_id")
     rating = data.get("rating")
     review = data.get("review")
+    song = data.get("song")
+    artist = data.get("artist")
+    name = data.get("name")
 
     if not user_id or (rating is None and review is None):
       return jsonify({"error": "Missing required fields"}), 400
@@ -50,7 +53,10 @@ def add_review():
     response = supabase.table("reviews").insert({
       "user_id": user_id,
       "rating": rating,
-      "review": review
+      "review": review,
+      "name": name,
+      "song": song,
+      "artist": artist
     }).execute()
 
     return jsonify({"message": "Review added successfully", "response": response.data}), 201
