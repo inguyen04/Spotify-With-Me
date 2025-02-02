@@ -173,3 +173,16 @@ export async function getProfileImage() {
   const profile = await fetchProfile(token);
   return profile.images.length > 0 ? profile.images[0].url : null;
 }
+
+export async function getRandomSongFromBackend() {
+  try {
+    const response = await fetch("http://127.0.0.1:5000/get_song");
+    if (!response.ok) throw new Error("Failed to fetch song");
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching random song:", error);
+    return null;
+  }
+}
