@@ -3,8 +3,13 @@ const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
 export async function init(){
-    const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
+    debugger
+    let token = localStorage.getItem("access_token"); // Retrieve the token from local storage
+
+    if (token=="undefined") {
+        token = await getAccessToken(clientId, code); // Obtain a new access token if not available
+    }
+    const profile = await fetchProfile(token);
     console.log(profile); // Profile data logs to console
 
     populateUI(profile)
@@ -22,7 +27,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     params.append("client_id", clientId);
     params.append("response_type", "code");
     params.append("redirect_uri", "http://localhost:5173/home");
-    params.append("scope", "user-read-private user-read-email");
+    params.append("scope", "user-read-private user-read-email user-read-recently-played");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
 
@@ -67,6 +72,7 @@ export async function getAccessToken(clientId, code) {
     });
 
     const { access_token } = await result.json();
+    localStorage.setItem("access_token", access_token);
     return access_token;
 }
 
@@ -95,9 +101,12 @@ async function sendProfileIdToBackend(profileId) {
 }
 
 export async function getUserInfo(){
-    debugger
-    const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
+    let token = localStorage.getItem("access_token");
+
+    if (token=="undefined") {
+        token = await getAccessToken(clientId, code); // Obtain a new access token if not available
+    }
+    const profile = await fetchProfile(token);
     console.log(profile); // Profile data logs to console
 
     sendProfileIdToBackend(profile.id);
@@ -120,7 +129,11 @@ function populateUI(profile) {
 }
 
 export async function fetchRecentlyPlayedSongs() {
-    const token = await getAccessToken(clientId, code)
+    let token = localStorage.getItem("access_token");
+
+    if (token=="undefined") {
+        token = await getAccessToken(clientId, code); // Obtain a new access token if not available
+    }
 
     const result = await fetch("https://api.spotify.com/v1/me/player/recently-played", {
         method: "GET",
@@ -133,11 +146,16 @@ export async function fetchRecentlyPlayedSongs() {
 
     const data = await result.json();
 
+    console.log(data.items.map(item => item.track));
     return data.items(item => item.track);
 }
 
 export async function getProfileImage() {
-    const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
+    let token = localStorage.getItem("access_token");
+
+    if (token=="undefined") {
+        token = await getAccessToken(clientId, code); // Obtain a new access token if not available
+    }
+    const profile = await fetchProfile(token);
     return profile.images.length > 0 ? profile.images[0].url : null;
 }
