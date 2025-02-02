@@ -6,12 +6,27 @@
 }
 
 body {
-  background: linear-gradient(135deg, #001f3f, #2E5984, #0074D9, #00aaff, #BCD2E8);
+  background: linear-gradient(
+    135deg,
+    #001f3f,
+    #2e5984,
+    #0074d9,
+    #00aaff,
+    #bcd2e8
+  );
   height: 100%;
   width: 100%;
   display: flex;
   overflow: hidden;
-  
+}
+
+.title-1 {
+  position: absolute;
+  top: 3rem;
+  left: 4rem;
+  text-align: left;
+  color: rgb(176, 205, 218);
+  font-size: 4rem;
 }
 
 .title {
@@ -88,7 +103,9 @@ body {
   left: 70rem;
 }
 
-.logo-1, .logo-2, .logo-3 {
+.logo-1,
+.logo-2,
+.logo-3 {
   width: 4rem;
 }
 

@@ -3,12 +3,12 @@ const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
 export async function init() {
-//   debugger;
-//   let token = localStorage.getItem("access_token"); // Retrieve the token from local storage
+  //   debugger;
+  //   let token = localStorage.getItem("access_token"); // Retrieve the token from local storage
 
-//   if (token == "undefined") {
-    const token = await getAccessToken(clientId, code); // Obtain a new access token if not available
-//   }
+  //   if (token == "undefined") {
+  const token = await getAccessToken(clientId, code); // Obtain a new access token if not available
+  //   }
   const profile = await fetchProfile(token);
   console.log(profile); // Profile data logs to console
 
@@ -172,4 +172,28 @@ export async function getProfileImage() {
   }
   const profile = await fetchProfile(token);
   return profile.images.length > 0 ? profile.images[0].url : null;
+}
+
+export async function getRandomSongFromBackend() {
+  try {
+    const response = await fetch("http://127.0.0.1:5000/get_song");
+    if (!response.ok) throw new Error("Failed to fetch song");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching random song:", error);
+    return null;
+  }
+}
+
+export async function getAllReviewsFromBackend() {
+  try {
+    const response = await fetch("http://127.0.0.1:5000/get-all-reviews");
+    if (!response.ok) throw new Error("Failed to fetch reviews");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return null;
+  }
 }

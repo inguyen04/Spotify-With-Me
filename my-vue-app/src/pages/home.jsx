@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { init } from "/src/script.jsx";
 import playlistLogo from "/src/assets/playlistt.jpg";
-import { getRandomSongFromBackend } from "/src/script.jsx";
+import {
+  getRandomSongFromBackend,
+  getAllReviewsFromBackend,
+} from "/src/script.jsx";
 import { useNavigate } from "react-router-dom";
 
 import "./home.css";
@@ -9,6 +12,7 @@ import "./home.css";
 function Home() {
   const [song, setSong] = useState(null);
   const [error, setError] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
 
   const handlePress = () => {
@@ -16,9 +20,9 @@ function Home() {
   };
 
   // Run `init()` on mount
-  useEffect(() => {
-    init();
-  }, []);
+  //   useEffect(() => {
+  //     init();
+  //   }, []);
 
   useEffect(() => {
     async function fetchSong() {
@@ -32,6 +36,32 @@ function Home() {
     fetchSong();
   }, []);
 
+  useEffect(() => {
+    async function fetchReviews() {
+      debugger;
+      const allreviews = await getAllReviewsFromBackend();
+      const reviewArray = [];
+      for (let i = 0; i < allreviews.reviews.length; i++) {
+        console.log(allreviews.reviews[i]);
+        let review = [
+          allreviews.reviews[i].song,
+          allreviews.reviews[i].artist,
+          allreviews.reviews[i].name,
+          allreviews.reviews[i].review,
+        ];
+        reviewArray.push(review);
+      }
+      setReviews(reviewArray);
+      //   if (reviews?.name) {
+      //     setReviews(allreviews);
+      //   } else {
+      //     setError("No reviews found.");
+      //   }
+    }
+    fetchReviews();
+    console.log(reviews);
+  }, []);
+
   return (
     <div className="home-page">
       <div className="row">
@@ -42,9 +72,14 @@ function Home() {
             </h2>
             <h2 className="feed-title">Latest Music Updates</h2>
             <div className="feed-container">
-              <div className="feed-card">Sorry - UMI</div>
-              <div className="feed-card">All the way live - Metro Boomin</div>
-              <div className="feed-card">Wishful Thinking - Grent Perez</div>
+              {reviews.map((review, index) => (
+                <li className="reviewinlist" key={index}>
+                  <p className="items-in-review">
+                    {review[0]} by {review[1]} reviewed by {review[2]}
+                  </p>
+                  <p>{review[3]}</p>
+                </li>
+              ))}
             </div>
           </div>
         </div>

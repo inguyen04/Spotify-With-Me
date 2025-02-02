@@ -88,8 +88,8 @@ main {
 
 .img-1 {
   position: absolute;
-  left: 52rem;
-  top: 8rem;
+  left: 50rem;
+  top: 7rem;
   width: 70px;
 }
 
@@ -97,7 +97,7 @@ main {
   position: absolute;
   width: 250px;
   left: 56rem;
-  top: 13rem;
+  top: 11rem;
 }
 
 .recommended h2 {
@@ -148,4 +148,12 @@ main {
 .rating-button {
   width: 20rem;
   font-size: 2rem;
+}
+
+.items-in-review {
+  background-color: #fff;
+}
+
+.reviewinlist {
+  background-color: #fff;
 }
