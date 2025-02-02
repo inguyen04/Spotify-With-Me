@@ -7,7 +7,6 @@ import Login from './pages/login.jsx'
 import './App.css'
 
 function App() {
-
   return (
     <Routes>
       <Route path="/" element={<Login/>} />
