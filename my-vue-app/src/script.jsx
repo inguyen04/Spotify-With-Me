@@ -79,7 +79,7 @@ async function fetchProfile(token) {
 }
 
 async function sendProfileIdToBackend(profileId) {
-    const response = await fetch('http://127.0.0.1:5000/receive-userid', {
+    const response = await fetch('http://localhost:5000/receive-userid', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
