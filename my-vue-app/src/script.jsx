@@ -8,6 +8,7 @@ export async function init(){
     console.log(profile); // Profile data logs to console
 
     populateUI(profile)
+    sendProfileIdToBackend(profile.id)
 }
 
 
@@ -78,7 +79,7 @@ async function fetchProfile(token) {
 }
 
 async function sendProfileIdToBackend(profileId) {
-    const response = await fetch('/api/profile', {
+    const response = await fetch('http://localhost:5000/receive-userid', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
