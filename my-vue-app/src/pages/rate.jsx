@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchRecentlyPlayedSongs } from '../script.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function Rate() {
     const [recentlyPlayed, setRecentlyPlayed] = useState([]);
@@ -13,7 +14,8 @@ function Rate() {
                 const songsSet = new Set(songs);
                 const songArray = [];
                 for(let i = 0; i < songs.length; i++){
-                    let song = [songs[i].name, songs[i].artists[0].name, songs[i].album.images.url];
+                    console.log(songs[i]);
+                    let song = [songs[i].name, songs[i].artists[0].name, songs[i].album.images[1].url];
                     songArray.push(song);
 
                 }
@@ -68,31 +70,40 @@ function Rate() {
             console.log(localStorage.getItem('name'))
         }
     }
+    const navigate = useNavigate();
+
+    const back = () => {
+        navigate('/home')
+    }
 
     return (
         <div id="songlist_and_rate">
-            <div id="songlist">
-                {recentlyPlayed.map((song, index) => (
-                    <div key={index} onClick={() => handleSelect(index)}>
-                        {song[0]} by {song[1]} index {index}
-                    </div> 
-                ))}
-            </div>
             <div id="rate">
+            <button className="button" onClick={back}>back</button>
             {selected ? (
                 <div>
-                    <p>song: {recentlyPlayed[selectedIndex][0]}</p>
-                    <p>artist: {recentlyPlayed[selectedIndex][1]}</p>
+                    <img src={recentlyPlayed[selectedIndex][2]}></img>
+                    <p className="review">{recentlyPlayed[selectedIndex][0]}</p>
+                    <p className="review">{recentlyPlayed[selectedIndex][1]}</p>
                     
                 <form onSubmit={submitForm}>
-                    <input type="text" placeholder="enter review" name="review" id="review"/>
+                    <textarea type="text" placeholder="enter review" name="review" id="reviewBox"/>
                     <input type="submit" id="submit_btn" value="submit"/>
                 </form>
                 </div>
                 ) : (
-                    <p>select a song pls</p>
+                    <div>
+                    <p id="pleaseselect">select a song to review</p>
+                    </div>
                 )}
             </div>
+            <ul id="songlist">
+                {recentlyPlayed.map((song, index) => (
+                    <li className="recentsongs" key={index} onClick={() => handleSelect(index)}>
+                        <p class="recentsongs">{song[0]} by {song[1]}</p>
+                    </li> 
+                ))}
+            </ul>
         </div>
     );
 }
