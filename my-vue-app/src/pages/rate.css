@@ -1,0 +1,17 @@
+#songlist_and_rate{
+    height: 100;
+    display:flex;
+    flex-direction: row;
+    margin: 5px;
+    border: 4px;
+}
+
+#songlist{
+    border: 4px;
+    height: 100;
+}
+
+#rate{
+    border: 4px;
+    height: 100;
+}
