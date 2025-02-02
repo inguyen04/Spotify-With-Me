@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from flask import Blueprint, request, jsonify
 from supabase import create_client, Client
 from flask_cors import CORS
+import math
+import random
 
 
 load_dotenv()
@@ -58,8 +60,7 @@ def add_review():
       "review": review,
       "name": name,
       "song": song,
-      "artist": artist,
-      "id": 1
+      "artist": artist
     }).execute()
 
     return jsonify({"message": "Review added successfully", "response": response.data}), 201
@@ -75,3 +76,20 @@ def get_review(user_id):
     return jsonify({"reviews": response.data}), 200
   except Exception as e:
     return jsonify({"error": str(e)}), 500
+  
+@routes.route('/get_song', methods=['GET'])
+def get_song():
+  try:
+    index = random.randint(1, 10) 
+    response = supabase.table("songs").select("*").eq("id", index).execute()
+
+    if response.data and len(response.data) > 0:
+      song_data = response.data[0]
+
+      return jsonify({"song_name": song_data["song_name"], "artist": song_data["artist"]}), 200
+    else:
+      return jsonify({"error": "song not found"}), 404
+  
+  except Exception as e:
+    return jsonify({"error": str(e)}), 500
+  
