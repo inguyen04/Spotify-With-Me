@@ -139,3 +139,9 @@ export async function fetchRecentlyPlayedSongs() {
 
     return data.items(item => item.track);
 }
+
+export async function getProfileImage() {
+    const accessToken = await getAccessToken(clientId, code);
+    const profile = await fetchProfile(accessToken);
+    return profile.images.length > 0 ? profile.images[0].url : null;
+}
