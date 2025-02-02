@@ -53,7 +53,7 @@ def add_review():
       "review": review
     }).execute()
 
-    return jsonify({"message": "Review added successfully", "response": response}), 201
+    return jsonify({"message": "Review added successfully", "response": response.data}), 201
   
   except Exception as e:
     print("Error", str(e))
@@ -63,6 +63,6 @@ def add_review():
 def get_review(user_id):
   try:
     response = supabase.table("reviews").select("*").eq("user_id", user_id).execute()
-    return jsonify({"reviews": response}), 200
+    return jsonify({"reviews": response.data}), 200
   except Exception as e:
     return jsonify({"error": str(e)}), 500
