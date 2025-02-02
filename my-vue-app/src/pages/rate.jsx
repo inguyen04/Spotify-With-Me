@@ -52,15 +52,20 @@ function Rate() {
             },
             body: JSON.stringify({ user_id: profileId, 
                 review: review, 
-                song_title: recentlyPlayed[selectedIndex][0], 
+                song: recentlyPlayed[selectedIndex][0], 
                 artist: recentlyPlayed[selectedIndex][1],
-                name: localStorage.getItem('name')})
+                name: localStorage.getItem('name'),
+                rating: null})
         });
     
         if (response.ok) {
             console.log('Profile ID sent successfully');
         } else {
-            console.error('Failed to send Profile ID');
+            console.error('Failed to send review');
+            console.log(review)
+            console.log(recentlyPlayed[selectedIndex][0])
+            console.log(recentlyPlayed[selectedIndex][1])
+            console.log(localStorage.getItem('name'))
         }
     }
 
