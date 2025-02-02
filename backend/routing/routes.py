@@ -69,13 +69,21 @@ def add_review():
     print("Error", str(e))
     return jsonify({"error": str(e)}), 500
   
-@routes.route('/send-reviews/<user_id>', methods=['GET'])
+@routes.route('/send-user-reviews/<user_id>', methods=['GET'])
 def get_review(user_id):
   try:
     response = supabase.table("reviews").select("*").eq("user_id", user_id).execute()
     return jsonify({"reviews": response.data}), 200
   except Exception as e:
     return jsonify({"error": str(e)}), 500
+
+@routes.route('/get-all-reviews', methods=['GET'])
+def get_all_reviews():
+  try:
+    response = supabase.table('reviews').select("*").execute()
+    return jsonify({"reviews": response.data}), 200
+  except Exception as e:
+    return jsonify({"Error": str(e)}), 500
   
 @routes.route('/get_song', methods=['GET'])
 def get_song():
