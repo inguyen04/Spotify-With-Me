@@ -10,7 +10,7 @@ const clientId = "cef9cca2812d435dac59804107b8fcba"; // Replace with your client
 
 function App() {
     const handleLogin = () => {
-        redirectToAuthCodeFlow(clientId);
+      redirectToAuthCodeFlow(clientId);
     };
 
   return (

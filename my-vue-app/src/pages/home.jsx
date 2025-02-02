@@ -1,9 +1,8 @@
 import React from "react";
+import {getUserInfo} from "/src/script.jsx"
 
 function Home() {
-    
-    //getUserInfo()
-    
+    getUserInfo()
     return(
     <main>
         <div>

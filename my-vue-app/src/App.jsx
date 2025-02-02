@@ -8,7 +8,6 @@ import Rate from './pages/rate.jsx'
 import './App.css'
 
 function App() {
-
   return (
     <Routes>
       <Route path="/" element={<Login/>} />

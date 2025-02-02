@@ -13,26 +13,30 @@ routes = Blueprint("routes", __name__)
 SUPABASE_URL = os.getenv('SUPABASE_URL')
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+  raise ValueError("Missing SUPABASE_URL or SUPABASE_KEY. Check .env file.")
+
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-@routes.route('/receive-data', methods=['POST'])
-def receive_data():
+@routes.route('/receive-userid', methods=['POST'])
+def receive_userid():
   try:
     data = request.get_json()
-    user_id = data.get("user_id")
+    user_id = data.get("profile_id")
 
     print("Received data:", data)
 
     response = supabase.table("users").insert({"user_id": user_id}).execute()
 
-    return jsonify({"message": "User added successfuly", "response": response}), 201
+    return jsonify({"message": "User added successfuly", "response": response.data}), 201
   
   except Exception as e:
     print("Error:", str(e))
     return jsonify({"error": str(e)}), 500
 
 
-@routes.route('/add-review', methods=['POST'])
+@routes.route('/add-review', methods=['GET'])
 def add_review():
   try:
     data = request.get_json()
@@ -49,13 +53,13 @@ def add_review():
       "review": review
     }).execute()
 
-    return jsonify({"message": "Review added successfully", "response": response}),
+    return jsonify({"message": "Review added successfully", "response": response}), 201
   
   except Exception as e:
-    print("Error:" str(e))
+    print("Error", str(e))
     return jsonify({"error": str(e)}), 500
   
-@routes.route('/get-reviews/<user_id>', methods=['GET'])
+@routes.route('/send-reviews/<user_id>', methods=['GET'])
 def get_review(user_id):
   try:
     response = supabase.table("reviews").select("*").eq("user_id", user_id).execute()
