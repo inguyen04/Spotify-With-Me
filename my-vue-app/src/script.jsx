@@ -122,3 +122,20 @@ function populateUI(profile) {
     // document.getElementById("url").innerText = profile.href;
     // document.getElementById("url").setAttribute("href", profile.href);
 }
+
+async function fetchRecentlyPlayedSongs() {
+    const token = await getAccessToken(clientId, code)
+
+    const result = await fetch("https://api.spotify.com/v1/me/player/recently-played", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!result.ok) {
+        throw new Error('Failed to fetch recently played songs');
+    }
+
+    const data = await result.json();
+
+    return data.items(item => item.track);
+}
