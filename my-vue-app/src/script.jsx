@@ -123,7 +123,7 @@ function populateUI(profile) {
     // document.getElementById("url").setAttribute("href", profile.href);
 }
 
-async function fetchRecentlyPlayedSongs() {
+export async function fetchRecentlyPlayedSongs() {
     const token = await getAccessToken(clientId, code)
 
     const result = await fetch("https://api.spotify.com/v1/me/player/recently-played", {
