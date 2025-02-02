@@ -7,7 +7,7 @@ export async function init(){
     let token = localStorage.getItem("access_token"); // Retrieve the token from local storage
 
     if (token=="undefined") {
-        token = await getAccessToken(clientId, code); // Obtain a new access token if not available
+        const token = await getAccessToken(clientId, code); // Obtain a new access token if not available
     }
     const profile = await fetchProfile(token);
     console.log(profile); // Profile data logs to console
@@ -114,6 +114,9 @@ export async function getUserInfo(){
 
 function populateUI(profile) {
     document.getElementById("displayName").innerText = profile.display_name;
+
+    localStorage.setItem("name", profile.display_name)
+
     if (profile.images[0]) {
         const profileImage = new Image(200, 200);
         profileImage.src = profile.images[0].url;
@@ -121,6 +124,9 @@ function populateUI(profile) {
         document.getElementById("imgUrl").innerText = profile.images[0].url;
     }
     document.getElementById("id").innerText = profile.id;
+
+    localStorage.setItem("profile_id", profile.id);
+
     document.getElementById("email").innerText = profile.email;
     document.getElementById("uri").innerText = profile.uri;
     document.getElementById("uri").setAttribute("href", profile.external_urls.spotify);
@@ -146,8 +152,8 @@ export async function fetchRecentlyPlayedSongs() {
 
     const data = await result.json();
 
-    console.log(data.items.map(item => item.track));
-    return data.items(item => item.track);
+    //console.log(data.items.map(item => item.track));
+    return data.items.map(item => item.track);
 }
 
 export async function getProfileImage() {
