@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import {init} from "/src/script.jsx";
 
 import "./home.css"

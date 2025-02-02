@@ -8,6 +8,7 @@ export async function init(){
     console.log(profile); // Profile data logs to console
 
     populateUI(profile)
+    sendProfileIdToBackend(profile.id)
 }
 
 
